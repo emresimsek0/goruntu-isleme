@@ -1,15 +1,17 @@
 #Görüntü İşleme Tekniği kullanarak kumaşlarda kusur tespiti 
+# Bu proje kapsamında Kumaş Resimlerinin renk dağılımı ve renk bilgisini daha iyi anlamak için 2 farklı renk tonu ile ifade edilir. 
+# Bu resimlerin renklerinin sayısal değerleri grafik üzerinde gösterilir. Grafiğin simetriliği bozan bir yer tespit edilirse hata tespit edilmiş olur.
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
 resm1 = cv.imread("renkhata.png") #orjinal resimi temsil eder
 resim= cv.imread("renkhata.png",0) #işlenecek resini temsil eder.
-blr1 = cv.blur(resim,(15,15)) 
-ret, thresh1 = cv.threshold(blr1, 50, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
+blr1 = cv.blur(resim,(15,15)) #görüntüdeki gürültüleri gidermek için görüntüyü bulanıklaştırır.
+ret, thresh1 = cv.threshold(blr1, 50, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)# gürültüsü azaltılmış resmi siyah ve beyaza dönüştürür.
 
 kernel = np.ones((7,7),np.uint8)
-dilation = cv.erode(thresh1,kernel,iterations=1) 
+dilation = cv.erode(thresh1,kernel,iterations=1) #resmin ön planını arka planından ayırmak için bu fonksiyon kullanılır.
 
     
 
